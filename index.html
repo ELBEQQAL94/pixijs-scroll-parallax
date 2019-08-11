@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Prallax-scroll</title>
+    <style>
+      body {
+        background-color: #000000;
+      }
+      #my-canvas {
+        width: 100vw;
+        height: 100vh;
+        background-color: #222222;
+      }
+    </style>
+  </head>
+  <body onload="init();">
+    <div>
+      <canvas id="my-canvas"></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script>
+    <script src="index.js"></script>
+    <script>
+      function init() {
+        stage = new PIXI.Container();
+        renderer = PIXI.autoDetectRenderer(512, 384, {
+          view: document.getElementById("my-canvas")
+        });
+
+        // add image background
+        let fartexture = PIXI.Texture.fromImage("resources/bg-far.png");
+
+        // add position to your image
+        //far = new PIXI.Sprite(fartexture);
+        far = new PIXI.extras.TilingSprite(fartexture, 512, 256);
+
+        far.position.x = 0;
+        far.position.y = 0;
+        far.tilePosition.x = 0;
+        far.tilePosition.y = 0;
+
+        // add child
+        stage.addChild(far);
+
+        // add mid texture
+        let midtexture = PIXI.Texture.fromImage("resources/bg-mid.png");
+
+        // add position
+        //mid = new PIXI.Sprite(midtexture);
+        mid = new PIXI.extras.TilingSprite(midtexture, 512,256);
+
+        mid.position.x = 0;
+        mid.position.y = 128;
+        mid.tilePosition.x = 0;
+        mid.tilePosition.y = 0;
+
+        // add child
+        stage.addChild(mid);
+
+        // renderer.render(stage);
+
+        // add animation
+        requestAnimationFrame(update);
+      }
+
+      // Implement update function
+      function update(){
+          far.tilePosition.x -= 0.128;
+          mid.tilePosition.x -= 0.64;
+          
+          renderer.render(stage);
+
+          requestAnimationFrame(update);
+
+      }
+    </script>
+  </body>
+</html>
